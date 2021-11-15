@@ -1,10 +1,11 @@
 {
   "name": "test",
   "version": "1.0.0",
-  "description": "",
+  "description": "Integration tests for RockPeaks using Flow JS Testing Framework",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --runInBand"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +17,10 @@
     "flow-js-testing": "^0.1.15-alpha.4",
     "jest": "^27.3.1",
     "jest-environment-node": "^27.3.1"
+  },
+  "dependencies": {
+    "@onflow/fcl": "^0.0.77",
+    "@onflow/sdk": "^0.0.55",
+    "@onflow/types": "^0.0.5"
   }
 }
