@@ -48,3 +48,36 @@ export const getPeakonBalance = async (account) => {
 
   return executeScript({ name, args });
 };
+
+/*
+ * Mints **amount** of Peakon tokens and transfers them to recipient.
+ * @param {string} recipient - recipient address
+ * @param {string} amount - UFix64 amount to mint
+ * @throws Will throw an error if transaction is reverted.
+ * @returns {Promise<*>}
+ * */
+export const mintPeakon = async (recipient, amount) => {
+  const RockPeaksAdmin = await getRockPeaksAdminAddress();
+
+  const name = "peakon/mint_tokens";
+  const args = [recipient, amount];
+  const signers = [RockPeaksAdmin];
+
+  return sendTransaction({ name, args, signers });
+};
+
+/*
+ * Transfers **amount** of Peakon tokens from **sender** account to **recipient**.
+ * @param {string} sender - sender address
+ * @param {string} recipient - recipient address
+ * @param {string} amount - UFix64 amount to transfer
+ * @throws Will throw an error if transaction is reverted.
+ * @returns {Promise<*>}
+ * */
+export const transferPeakon = async (sender, recipient, amount) => {
+  const name = "peakon/transfer_tokens";
+  const args = [amount, recipient];
+  const signers = [sender];
+
+  return sendTransaction({ name, args, signers });
+};
