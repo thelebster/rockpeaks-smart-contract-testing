@@ -1,0 +1,27 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+      - name: Install the Flow CLI
+        run: |
+          sh -ci "$(curl -fsSL https://storage.googleapis.com/flow-cli/install.sh)"
+          flow version
+      - name: Run Tests
+        run: |
+          cd test
+          npm ci
+          npm run test

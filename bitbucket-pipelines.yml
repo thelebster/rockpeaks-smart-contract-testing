@@ -1,0 +1,16 @@
+image: node:12
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Run Tests
+          caches:
+            - node
+          script:
+            - cd test
+            - sh -ci "$(curl -fsSL https://storage.googleapis.com/flow-cli/install.sh)"
+            - export PATH=$PATH:/root/.local/bin
+            - flow version
+            - npm ci
+            - npm run test

@@ -7,7 +7,8 @@ import {
   getPeakonSupply,
   setupPeakonOnAccount,
   getPeakonBalance,
-  mintPeakon, transferPeakon,
+  mintPeakon,
+  transferPeakon,
 } from "./src/peakon";
 
 // We need to set timeout for a higher number, because some transactions might take up some time
@@ -19,7 +20,7 @@ describe("Peakon", ()=>{
 		// You can specify different port to parallelize execution of describe blocks
     const port = 8080;
 		// Setting logging flag to true will pipe emulator output to console
-    const logging = false;
+    const logging = true;
 
     await init(basePath, { port });
     return emulator.start(port, logging);
