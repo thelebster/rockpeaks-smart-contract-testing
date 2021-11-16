@@ -14,7 +14,7 @@ import {
 // We need to set timeout for a higher number, because some transactions might take up some time
 jest.setTimeout(500000);
 
-describe("Peakon", ()=>{
+describe("peakon", ()=>{
   beforeEach(async () => {
     const basePath = path.resolve(__dirname, "../cadence");
 		// You can specify different port to parallelize execution of describe blocks
