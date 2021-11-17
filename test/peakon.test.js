@@ -20,7 +20,7 @@ describe("peakon", ()=>{
 		// You can specify different port to parallelize execution of describe blocks
     const port = 8080;
 		// Setting logging flag to true will pipe emulator output to console
-    const logging = true;
+    const logging = process.env.DEBUG || false;
 
     await init(basePath, { port });
     return emulator.start(port, logging);

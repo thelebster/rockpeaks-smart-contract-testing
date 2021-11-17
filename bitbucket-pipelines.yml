@@ -13,4 +13,4 @@ pipelines:
             - export PATH=$PATH:/root/.local/bin
             - flow version
             - npm ci
-            - npm run test
+            - DEBUG=1 npm run test

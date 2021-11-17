@@ -21,7 +21,7 @@ describe("governance-token", ()=>{
 		// You can specify different port to parallelize execution of describe blocks
     const port = 8080;
 		// Setting logging flag to true will pipe emulator output to console
-    const logging = true;
+    const logging = process.env.DEBUG || false;
 
     await init(basePath, { port });
     return emulator.start(port, logging);
@@ -32,7 +32,7 @@ describe("governance-token", ()=>{
     return emulator.stop();
   });
 
-  it("shall deploy RockPeaksClipCard contract", async () => {
+  it("shall deploy GovernanceToken contract", async () => {
     await deployGovernanceToken();
   });
 
@@ -48,7 +48,7 @@ describe("governance-token", ()=>{
     });
   });
 
-  it("shall be able to mint a kittyItems", async () => {
+  it("shall be able to mint a GovernanceToken", async () => {
     // Setup
     await deployGovernanceToken();
     const Barnaby = await getAccountAddress("Barnaby");

@@ -24,4 +24,4 @@ jobs:
         run: |
           cd test
           npm ci
-          npm run test
+          DEBUG=1 npm run test

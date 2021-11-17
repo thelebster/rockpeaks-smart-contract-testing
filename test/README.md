@@ -18,6 +18,9 @@ npm test -- clip-card.test.js
 npm test -- governance-token.test.js
 
 npm test -- storefront.test.js
+
+# Set logging flag to true to pipe emulator output to console
+DEBUG=1 npm test -- storefront.test.js
 ```
 
 * [Testnet Testing Guidelines](https://docs.onflow.org/dapp-development/testnet-testing/)

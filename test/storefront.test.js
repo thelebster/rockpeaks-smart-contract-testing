@@ -27,7 +27,7 @@ describe("storefront", () => {
     // You can specify different port to parallelize execution of describe blocks
     const port = 8080;
     // Setting logging flag to true will pipe emulator output to console
-    const logging = false;
+    const logging = process.env.DEBUG || false;
 
     await init(basePath, { port });
     return emulator.start(port, logging);
@@ -56,7 +56,7 @@ describe("storefront", () => {
     const Barnaby = await getAccountAddress("Barnaby");
     await setupStorefrontOnAccount(Barnaby);
 
-    // Mint KittyItem for Barnaby's account
+    // Mint RockPeaksClipCard for Barnaby's account
     await shallPass(mintRockPeaksClipCard('2c443592-cd3c-403a-81e5-ffa4608422c5', Barnaby));
 
     const itemID = 0;
