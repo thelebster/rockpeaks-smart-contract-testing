@@ -39,3 +39,63 @@ export const getRockPeaksClipCardSupply = async () => {
 
   return executeScript({ name });
 };
+
+/*
+ * Mints RockPeaksClipCard and sends it to **recipient**.
+ * @param {string} nodeId - RockPeaks Clip Card entity UUID
+ * @param {string} recipient - recipient account address
+ * @throws Will throw an error if execution will be halted
+ * @returns {Promise<*>}
+ * */
+export const mintRockPeaksClipCard = async (nodeId, recipient) => {
+  const RockPeaksAdmin = await getRockPeaksAdminAddress();
+
+  const name = "clip-card/mint_token";
+  const args = [recipient, nodeId];
+  const signers = [RockPeaksAdmin];
+
+  return sendTransaction({ name, args, signers });
+};
+
+/*
+ * Transfers RockPeaksClipCard NFT with id equal **itemId** from **sender** account to **recipient**.
+ * @param {string} sender - sender address
+ * @param {string} recipient - recipient address
+ * @param {UInt64} itemId - id of the item to transfer
+ * @throws Will throw an error if execution will be halted
+ * @returns {Promise<*>}
+ * */
+export const transferRockPeaksClipCard = async (sender, recipient, itemId) => {
+  const name = "clip-card/transfer_token";
+  const args = [recipient, itemId];
+  const signers = [sender];
+
+  return sendTransaction({ name, args, signers });
+};
+
+/*
+ * Returns the RockPeaksClipCard NFT with the provided **id** from an account collection.
+ * @param {string} account - account address
+ * @param {UInt64} itemID - NFT id
+ * @throws Will throw an error if execution will be halted
+ * @returns {UInt64}
+ * */
+export const getRockPeaksClipCard = async (account, itemID) => {
+  const name = "clip-card/get_token";
+  const args = [account, itemID];
+
+  return executeScript({ name, args });
+};
+
+/*
+ * Returns the number of RockPeaksClipCard NFTs in an account's collection.
+ * @param {string} account - account address
+ * @throws Will throw an error if execution will be halted
+ * @returns {UInt64}
+ * */
+export const getRockPeaksClipCardCount = async (account) => {
+  const name = "clip-card/get_collection_length";
+  const args = [account];
+
+  return executeScript({ name, args });
+};
