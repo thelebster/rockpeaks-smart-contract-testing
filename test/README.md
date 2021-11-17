@@ -11,7 +11,11 @@ npm run test
 npm test -- -t "rp-clip-card"
 
 # Run a single test file
+npm test -- peakon.test.js
+
 npm test -- clip-card.test.js
+
+npm test -- governance-token.test.js
 ```
 
 * [Testnet Testing Guidelines](https://docs.onflow.org/dapp-development/testnet-testing/)

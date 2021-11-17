@@ -1,5 +1,5 @@
 import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
-import RockPeaksClipCard from "../../contracts/RockPeaksClipCard.cdc"
+import GovernanceToken from "../../contracts/GovernanceToken.cdc"
 
 pub struct AccountItem {
   pub let itemID: UInt64
