@@ -1,8 +1,10 @@
-### Run tests
+# RockPeaks Test Suite
 
-```
-cd test
+Tests here were created with the [JS Testing Framework](https://github.com/onflow/flow-js-testing).
 
+## Run tests
+
+```shell
 npm install
 
 npm run test
@@ -23,5 +25,6 @@ npm test -- storefront.test.js
 DEBUG=1 npm test -- storefront.test.js
 ```
 
+## References
+
 * [Testnet Testing Guidelines](https://docs.onflow.org/dapp-development/testnet-testing/)
-* [JavaScript Testing Framework for Flow Network](https://github.com/onflow/flow-js-testing)
