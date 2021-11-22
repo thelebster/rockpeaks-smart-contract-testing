@@ -174,9 +174,9 @@ pub contract GovernanceToken: NonFungibleToken {
     //
 	init() {
         // Set our named paths
-        self.CollectionStoragePath = /storage/GovernanceTokenCollection
-        self.CollectionPublicPath = /public/GovernanceTokenCollection
-        self.MinterStoragePath = /storage/GovernanceTokenMinter
+        self.CollectionStoragePath = /storage/RockPeaksGovernanceTokenCollection
+        self.CollectionPublicPath = /public/RockPeaksGovernanceTokenCollection
+        self.MinterStoragePath = /storage/RockPeaksGovernanceTokenMinter
 
         // Initialize the total supply
         self.totalSupply = 0

@@ -305,7 +305,6 @@ pub contract RockPeaksClipCardMarket {
     }
 
     init () {
-        //FIXME: REMOVE SUFFIX BEFORE RELEASE
         self.CollectionStoragePath = /storage/RockPeaksClipCardMarketCollection002
         self.CollectionPublicPath = /public/RockPeaksClipCardMarketCollection002
     }

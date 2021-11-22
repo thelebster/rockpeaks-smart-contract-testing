@@ -159,7 +159,6 @@ pub contract Peakon: FungibleToken {
 
     init() {
         // Set our named paths.
-        //FIXME: REMOVE SUFFIX BEFORE RELEASE
         self.VaultStoragePath = /storage/peakonVault002
         self.ReceiverPublicPath = /public/peakonReceiver002
         self.BalancePublicPath = /public/peakonBalance002
