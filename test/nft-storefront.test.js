@@ -3,7 +3,7 @@ import { emulator, init, getAccountAddress, shallPass, set, getConfigValue } fro
 import * as fcl from "@onflow/fcl";
 
 import {getRockPeaksAdminAddress, toUFix64} from "./src/common";
-import { mintPeakon } from "./src/peakon";
+import { mintPeakon, getPeakonBalance } from "./src/peakon";
 import {
   getRockPeaksClipCardCount,
   mintRockPeaksClipCard,
@@ -61,6 +61,11 @@ describe("nft-storefront", () => {
 
     const itemID = 0;
 
+    // Setup escrow account
+    const Escrow = await getAccountAddress('Escrow');
+    await setupStorefrontOnAccount(Escrow);
+    fcl.config().put("0xEscrowAccount", Escrow);
+
     await shallPass(sellItem(Barnaby, itemID, toUFix64(1.11)));
   });
 
@@ -81,16 +86,17 @@ describe("nft-storefront", () => {
 
     await shallPass(mintPeakon(Bob, toUFix64(100)));
 
-    // Bob shall be able to buy from Barnaby
-    const sellItemTransactionResult = await shallPass(sellItem(Barnaby, itemId, toUFix64(1.11)));
-
-    const saleOfferAvailableEvent = sellItemTransactionResult.events[0];
-    const saleOfferResourceID = saleOfferAvailableEvent.data.listingResourceID;
-
     // Setup escrow account
     const Escrow = await getAccountAddress('Escrow');
     await setupStorefrontOnAccount(Escrow);
     fcl.config().put("0xEscrowAccount", Escrow);
+
+    // Bob shall be able to buy from Barnaby
+    const salePrice = 15.0;
+    const sellItemTransactionResult = await shallPass(sellItem(Barnaby, itemId, toUFix64(salePrice)));
+
+    const saleOfferAvailableEvent = sellItemTransactionResult.events[0];
+    const saleOfferResourceID = saleOfferAvailableEvent.data.listingResourceID;
 
     await shallPass(buyItem(Bob, saleOfferResourceID, Barnaby));
 
@@ -99,6 +105,17 @@ describe("nft-storefront", () => {
 
     const offerCount = await getSaleOfferCount(Barnaby);
     expect(offerCount).toBe(0);
+
+    const commission = salePrice * 0.1; // 10%
+    const barnabyBalance = await getPeakonBalance(Barnaby);
+    expect(barnabyBalance).toBe(toUFix64(salePrice - commission));
+
+    const bobBalance = await getPeakonBalance(Bob);
+    expect(bobBalance).toBe(toUFix64(100 - salePrice));
+
+    // Escrow balance should get a 10% commission from the original price
+    const escrowBalance = await getPeakonBalance(Escrow);
+    expect(escrowBalance).toBe(toUFix64(commission));
   });
 
   it("shall be able to remove a sale offer", async () => {
@@ -115,6 +132,11 @@ describe("nft-storefront", () => {
     const itemId = 0;
 
     const item = await getRockPeaksClipCard(Barnaby, itemId);
+
+    // Setup escrow account
+    const Escrow = await getAccountAddress('Escrow');
+    await setupStorefrontOnAccount(Escrow);
+    fcl.config().put("0xEscrowAccount", Escrow);
 
     // Listing item for sale shall pass
     const sellItemTransactionResult = await shallPass(sellItem(Barnaby, itemId, toUFix64(1.11)));

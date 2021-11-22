@@ -9,6 +9,7 @@ transaction(saleItemID: UInt64, saleItemPrice: UFix64) {
     let peakonReceiver: Capability<&Peakon.Vault{FungibleToken.Receiver}>
     let rockPeaksClipCardProvider: Capability<&RockPeaksClipCard.Collection{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>
     let storefront: &NFTStorefront.Storefront
+    let saleCuts: [NFTStorefront.SaleCut]
 
     prepare(account: AuthAccount) {
         // We need a provider capability, but one is not provided by default so we create one if needed.
@@ -27,19 +28,36 @@ transaction(saleItemID: UInt64, saleItemPrice: UFix64) {
 
         self.storefront = account.borrow<&NFTStorefront.Storefront>(from: NFTStorefront.StorefrontStoragePath)
             ?? panic("Missing or mis-typed NFTStorefront Storefront")
+
+        self.saleCuts = []
+
+        // Pay 90% to seller
+        let sellerSaleCut = NFTStorefront.SaleCut(
+            receiver: account.getCapability<&Peakon.Vault{FungibleToken.Receiver}>(Peakon.ReceiverPublicPath)!,
+            amount: saleItemPrice * 0.9
+        )
+
+        self.saleCuts.append(sellerSaleCut)
+
+        // Take a 10% commission by default
+        let escrowAccount = getAccount(0xEscrowAccount)
+        if escrowAccount.getCapability<&Peakon.Vault{FungibleToken.Receiver}>(Peakon.ReceiverPublicPath)!.check() {
+            let escrowSaleCut = NFTStorefront.SaleCut(
+                receiver: escrowAccount.getCapability<&Peakon.Vault{FungibleToken.Receiver}>(Peakon.ReceiverPublicPath)!,
+                amount: saleItemPrice * 0.1
+            )
+
+            self.saleCuts.append(escrowSaleCut)
+        }
     }
 
     execute {
-        let saleCut = NFTStorefront.SaleCut(
-            receiver: self.peakonReceiver,
-            amount: saleItemPrice
-        )
         self.storefront.createListing(
             nftProviderCapability: self.rockPeaksClipCardProvider,
             nftType: Type<@RockPeaksClipCard.NFT>(),
             nftID: saleItemID,
             salePaymentVaultType: Type<@Peakon.Vault>(),
-            saleCuts: [saleCut]
+            saleCuts: self.saleCuts
         )
     }
 }
