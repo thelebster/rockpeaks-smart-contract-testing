@@ -1,5 +1,8 @@
 {
   "testEnvironment": "node",
   "verbose": true,
-  "coveragePathIgnorePatterns": ["/node_modules/"]
+  "coveragePathIgnorePatterns": ["/node_modules/"],
+  "collectCoverageFrom": [
+    "{!(ignore-me),}.js"
+  ]
 }
