@@ -21,6 +21,8 @@ npm test -- governance-token.test.js
 
 npm test -- storefront.test.js
 
+npm test -- nft-storefront.test.js
+
 # Set logging flag to true to pipe emulator output to console
 DEBUG=1 npm test -- storefront.test.js
 ```
@@ -28,3 +30,8 @@ DEBUG=1 npm test -- storefront.test.js
 ## References
 
 * [Testnet Testing Guidelines](https://docs.onflow.org/dapp-development/testnet-testing/)
+
+## Changelog
+
+**Nov 22, 2021**
+* Switch to the [NFT storefront contract](https://github.com/onflow/nft-storefront), a general-purpose Cadence contract for trading NFTs on Flow.
