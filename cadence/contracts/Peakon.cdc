@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Unlicense
 import FungibleToken from "./FungibleToken.cdc"
 
 pub contract Peakon: FungibleToken {

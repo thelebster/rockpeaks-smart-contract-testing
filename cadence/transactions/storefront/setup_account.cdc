@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Unlicense
 import RockPeaksClipCardMarket from "../../contracts/RockPeaksClipCardMarket.cdc"
 
 // This transaction configures an account to hold SaleOffer items.

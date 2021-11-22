@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Unlicense
 import RockPeaksClipCardMarket from "../../contracts/RockPeaksClipCardMarket.cdc"
 
 // This script returns the size of an account's SaleOffer collection.

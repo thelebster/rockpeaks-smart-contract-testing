@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Unlicense
 import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
 import GovernanceToken from "../../contracts/GovernanceToken.cdc"
 

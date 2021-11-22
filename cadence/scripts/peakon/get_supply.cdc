@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Unlicense
 import Peakon from "../../contracts/Peakon.cdc"
 
 // This script returns the total amount of Peakon currently in existence.
@@ -6,4 +7,3 @@ pub fun main(): UFix64 {
     log(supply)
     return supply
 }
- 
