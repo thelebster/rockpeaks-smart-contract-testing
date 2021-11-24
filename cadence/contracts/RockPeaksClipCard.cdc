@@ -183,9 +183,9 @@ pub contract RockPeaksClipCard: NonFungibleToken {
     //
 	init() {
         // Set our named paths
-        self.CollectionStoragePath = /storage/RockPeaksClipCardCollection
-        self.CollectionPublicPath = /public/RockPeaksClipCardCollection
-        self.MinterStoragePath = /storage/RockPeaksClipCardMinter
+        self.CollectionStoragePath = /storage/RockPeaksClipCardsCollection
+        self.CollectionPublicPath = /public/RockPeaksClipCardsCollection
+        self.MinterStoragePath = /storage/RockPeaksClipCardsMinter
 
         // Initialize the total supply
         self.totalSupply = 0

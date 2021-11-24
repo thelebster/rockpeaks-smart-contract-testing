@@ -160,10 +160,10 @@ pub contract Peakon: FungibleToken {
 
     init() {
         // Set our named paths.
-        self.VaultStoragePath = /storage/peakonVault002
-        self.ReceiverPublicPath = /public/peakonReceiver002
-        self.BalancePublicPath = /public/peakonBalance002
-        self.AdminStoragePath = /storage/peakonAdmin002
+        self.VaultStoragePath = /storage/PeakonVault
+        self.ReceiverPublicPath = /public/PeakonReceiver
+        self.BalancePublicPath = /public/PeakonBalance
+        self.AdminStoragePath = /storage/PeakonAdmin
 
         // Initialize contract state.
         self.totalSupply = 0.0
