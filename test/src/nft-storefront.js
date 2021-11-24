@@ -40,7 +40,6 @@ export const setupStorefrontOnAccount = async (account) => {
   return sendTransaction({ name, signers });
 };
 
-
 /*
  * Lists item with id equal to **item** id for sale with specified **price**.
  * @param {string} seller - seller account address
