@@ -1,0 +1,71 @@
+{
+	"emulators": {
+		"default": {
+			"port": 3569,
+			"serviceAccount": "emulator-account"
+		}
+	},
+	"contracts": {
+		"Peakon": "./cadence/contracts/Peakon.cdc",
+		"RockPeaksClipCard": "./cadence/contracts/RockPeaksClipCard.cdc",
+		"GovernanceToken": "./cadence/contracts/GovernanceToken.cdc",
+		"RightsHolderSplits": "./cadence/contracts/RightsHolderSplits.cdc",
+		"FungibleToken": {
+			"source": "./cadence/contracts/FungibleToken.cdc",
+			"aliases": {
+				"emulator": "0xee82856bf20e2aa6",
+				"testnet": "0x9a0766d93b6608b7",
+				"mainnet": "0xf233dcee88fe0abe"
+			}
+		},
+		"NonFungibleToken": {
+			"source": "./cadence/contracts/NonFungibleToken.cdc",
+			"aliases": {
+				"emulator": "0xf8d6e0586b0a20c7",
+				"testnet": "0x631e88ae7f1d7c20",
+				"mainnet": "0x1d7e57aa55817448"
+			}
+		},
+		"NFTStorefront": {
+			"source": "./cadence/contracts/NFTStorefront.cdc",
+			"aliases": {
+				"testnet": "0x94b06cfca1d8a476",
+				"mainnet": "0x4eb8a10cb9f87357"
+			}
+		}
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "52b655247ca6133949ae4d1d5e13fa0cfded6a60c54c6f6505bcc9f70a183a3b"
+		},
+		"testnet-account": {
+			"address": "${FLOW_TESTNET_ACCOUNT_ADDRESS}",
+			"key": "${FLOW_TESTNET_PRIVATE_KEY}"
+		}
+	},
+	"deployments": {
+		"testnet": {
+			"testnet-account": [
+				"Peakon",
+				"RockPeaksClipCard",
+				"GovernanceToken",
+				"RightsHolderSplits"
+			]
+		},
+		"emulator": {
+		  	"emulator-account": [
+				"Peakon",
+				"RockPeaksClipCard",
+				"GovernanceToken",
+				"RightsHolderSplits",  
+				"NFTStorefront"
+		  	]
+		}
+	}
+}

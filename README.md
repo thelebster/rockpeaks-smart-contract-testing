@@ -9,3 +9,11 @@ This is a **complete NFT marketplace** built with [Cadence](https://docs.onflow.
 ## Testing
 
 Go to the [./test](./test) to find and run test suite.
+
+## Deploy to testnet
+
+Copy `.env.sample` to `.env` and specify necessary environmental variables.
+
+```
+./deploy.testnet.sh
+```
