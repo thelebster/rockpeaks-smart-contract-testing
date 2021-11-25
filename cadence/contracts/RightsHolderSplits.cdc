@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Unlicense
 import FungibleToken from "./FungibleToken.cdc"
 import Peakon from "./Peakon.cdc"
 
@@ -49,10 +50,6 @@ pub contract RightsHolderSplits {
     }
 
     pub fun execute(payment: @FungibleToken.Vault, nftID: UInt64, residualReceiver: &{FungibleToken.Receiver}, slipts: [PaymentSplit]) {
-        pre {
-            // Probably we will define some rules later, like checking an actual payer balance etc.
-        }
-
         // Pay each beneficiary their amount of the payment.
         for split in slipts {
             if let receiver = split.receiver.borrow() {

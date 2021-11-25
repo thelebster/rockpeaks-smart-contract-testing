@@ -8,7 +8,6 @@ transaction(amount: UFix64, recipients: [Address], splits: {Address: UFix64}, nf
     // The Vault resource that holds the tokens that are being transferred
     let sentVault: @FungibleToken.Vault
 
-    // let residualReceiver: &Peakon.Vault{FungibleToken.Receiver}
     let residualReceiver: &{FungibleToken.Receiver}
 
     prepare(signer: AuthAccount) {
@@ -29,6 +28,12 @@ transaction(amount: UFix64, recipients: [Address], splits: {Address: UFix64}, nf
                 }
             }
         }
+
+        let vaultBalanceRef = signer.getCapability(Peakon.BalancePublicPath).borrow<&Peakon.Vault{FungibleToken.Balance}>()
+            ?? panic("Could not borrow Balance reference to the Vault")
+
+        // Check an actual payer balance
+        assert(vaultBalanceRef.balance > amount, message: "Balance should be greater than amount to pay!")
 
         // Get a reference to the signer's stored vault
         let vaultRef = signer.borrow<&Peakon.Vault>(from: Peakon.VaultStoragePath)

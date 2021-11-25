@@ -1,5 +1,5 @@
 import path from "path";
-import { emulator, init, getAccountAddress, shallPass, set, getConfigValue } from "flow-js-testing";
+import { emulator, init, getAccountAddress, shallPass, set, getConfigValue, shallRevert, shallResolve } from "flow-js-testing";
 import * as fcl from "@onflow/fcl";
 
 import {getRockPeaksAdminAddress, toUFix64} from "./src/common";
@@ -71,5 +71,40 @@ describe("rights-holder-splits", () => {
 
     const barnBalance = await getPeakonBalance(Barnaby);
     expect(barnBalance).toBe(toUFix64(85));
+  });
+
+  it("shall not be able to create a payment split if balance lower than amount to pay", async () => {
+    // Setup
+    await deployRightsHolderSplits();
+    const Barnaby = await getAccountAddress("Barnaby");
+    await setupPeakonOnAccount(Barnaby);
+
+    await shallPass(mintPeakon(Barnaby, toUFix64(10)));
+
+    const RPAccount = await getAccountAddress("RPAccount");
+    await setupPeakonOnAccount(RPAccount);
+
+    const YTAccount = await getAccountAddress("RPAccount");
+    await setupPeakonOnAccount(YTAccount);
+
+    const recipients = [RPAccount, YTAccount];
+    let splits = {};
+    splits[RPAccount] = toUFix64(15.0);
+    splits[YTAccount] = toUFix64(10.0);
+
+    const nftID = 0;
+    await shallRevert(splitPayment(Barnaby, toUFix64(25.0), recipients, splits, nftID));
+
+    // Balances shall be intact
+    await shallResolve(async () => {
+      const barnBalance = await getPeakonBalance(Barnaby);
+      expect(barnBalance).toBe(toUFix64(10));
+
+      const RPAccountBalance = await getPeakonBalance(RPAccount);
+      expect(RPAccountBalance).toBe(toUFix64(0));
+
+      const YTAccountBalance = await getPeakonBalance(YTAccount);
+      expect(YTAccountBalance).toBe(toUFix64(0));
+    });
   });
 });
