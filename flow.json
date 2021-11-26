@@ -6,7 +6,12 @@
 		}
 	},
 	"contracts": {
-		"Peakon": "./cadence/contracts/Peakon.cdc",
+		"Peakon": {
+			"source": "./cadence/contracts/Peakon.cdc",
+			"aliases": {
+				"testnet": "0x8441c7a9269d7eb8"
+			}
+		},
 		"RockPeaksClipCard": "./cadence/contracts/RockPeaksClipCard.cdc",
 		"GovernanceToken": "./cadence/contracts/GovernanceToken.cdc",
 		"RightsHolderSplits": "./cadence/contracts/RightsHolderSplits.cdc",
