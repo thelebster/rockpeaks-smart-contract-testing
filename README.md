@@ -2,6 +2,18 @@
 
 This is a **complete NFT marketplace** built with [Cadence](https://docs.onflow.org/cadence), Flow's resource-oriented smart contract programming language.
 
+## Flow Core Contracts Addresses
+
+|Name|Testnet|Mainnet|
+|----|-------|-------|
+|[FungibleToken](./cadence/contracts/FungibleToken.cdc)|[0x9a0766d93b6608b7](https://flow-view-source.com/testnet/account/0x9a0766d93b6608b7/contract/FungibleToken)|[0xf233dcee88fe0abe](https://flowscan.org/contract/A.f233dcee88fe0abe.FungibleToken)|
+|[NonFungibleToken](./cadence/contracts/NonFungibleToken.cdc)|[0x631e88ae7f1d7c20](https://flow-view-source.com/testnet/account/0x631e88ae7f1d7c20/contract/NonFungibleToken)|[0x1d7e57aa55817448](https://flowscan.org/contract/A.1d7e57aa55817448.NonFungibleToken)|
+|[NFTStorefront](./cadence/contracts/NFTStorefront.cdc)|[0x94b06cfca1d8a476](https://flow-view-source.com/testnet/account/0x94b06cfca1d8a476/contract/NFTStorefront)|[0x4eb8a10cb9f87357](https://flowscan.org/contract/A.4eb8a10cb9f87357.NFTStorefront)|
+
+* https://docs.onflow.org/core-contracts/fungible-token/
+* https://docs.onflow.org/core-contracts/non-fungible-token/
+* https://github.com/onflow/nft-storefront
+
 ## Flow Testnet
 
 [Contracts](./cadence/contracts) has been deployed to the Flow testnet under the admin account [0x8441c7a9269d7eb8](https://flow-view-source.com/testnet/account/0x8441c7a9269d7eb8).
