@@ -29,7 +29,12 @@ transaction(recipient: Address, nodeId: String) {
             .borrow<&{NonFungibleToken.CollectionPublic}>()
             ?? panic("Could not get receiver reference to the NFT Collection")
 
+        let metadata : {String : String} = {
+            "type": "Edition",
+            "uri": "ipfs://QmRZdc3mAMXpv6Akz9Ekp1y4vDSjazTx2dCQRkxVy1yUj6"
+        }
+
         // mint the NFT and deposit it to the recipient's collection
-        self.minter.mintNFT(recipient: receiver, nodeId: nodeId)
+        self.minter.mintNFT(recipient: receiver, nodeId: nodeId, metadata: metadata)
     }
 }

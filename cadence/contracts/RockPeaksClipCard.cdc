@@ -11,7 +11,7 @@ pub contract RockPeaksClipCard: NonFungibleToken {
     pub event ContractInitialized()
     pub event Withdraw(id: UInt64, from: Address?)
     pub event Deposit(id: UInt64, to: Address?)
-    pub event Minted(id: UInt64, nodeId: String)
+    pub event Minted(id: UInt64, nodeId: String, metadata: {String: String})
 
     // Named Paths
     //
@@ -32,12 +32,15 @@ pub contract RockPeaksClipCard: NonFungibleToken {
         pub let id: UInt64
         // The Clip Card node ID (UUID)
         pub let nodeId: String
+        // Store different asset metadata, like type, IPFS URL etc
+        pub var metadata: {String: String}
 
         // initializer
         //
-        init(initID: UInt64, initNodeId: String) {
+        init(initID: UInt64, initNodeId: String, initMetadata: {String: String}) {
             self.id = initID
             self.nodeId = initNodeId
+            self.metadata = initMetadata
         }
     }
 
@@ -153,13 +156,15 @@ pub contract RockPeaksClipCard: NonFungibleToken {
         // Mints a new NFT with a new ID
 		// and deposit it in the recipients collection using their collection reference
         //
-		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, nodeId: String) {
-            emit Minted(id: RockPeaksClipCard.totalSupply, nodeId: nodeId)
+		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, nodeId: String, metadata: {String: String}) {
+            let nftID = RockPeaksClipCard.totalSupply
+            emit Minted(id: nftID, nodeId: nodeId, metadata: metadata)
 
-			// deposit it in the recipient's account using their reference
-			recipient.deposit(token: <-create RockPeaksClipCard.NFT(initID: RockPeaksClipCard.totalSupply, initNodeId: nodeId))
+            let token <-create RockPeaksClipCard.NFT(initID: nftID, initNodeId: nodeId, metadata: metadata)
+            // deposit it in the recipient's account using their reference
+			recipient.deposit(token: <-token)
 
-            RockPeaksClipCard.totalSupply = RockPeaksClipCard.totalSupply + (1 as UInt64)
+            RockPeaksClipCard.totalSupply = nftID + (1 as UInt64)
 		}
 	}
 
@@ -183,9 +188,9 @@ pub contract RockPeaksClipCard: NonFungibleToken {
     //
 	init() {
         // Set our named paths
-        self.CollectionStoragePath = /storage/RockPeaksClipCardsCollection
-        self.CollectionPublicPath = /public/RockPeaksClipCardsCollection
-        self.MinterStoragePath = /storage/RockPeaksClipCardsMinter
+        self.CollectionStoragePath = /storage/RockPeaksClipCardsCollection003
+        self.CollectionPublicPath = /public/RockPeaksClipCardsCollection003
+        self.MinterStoragePath = /storage/RockPeaksClipCardsMinter003
 
         // Initialize the total supply
         self.totalSupply = 0
