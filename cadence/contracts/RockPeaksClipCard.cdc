@@ -33,7 +33,7 @@ pub contract RockPeaksClipCard: NonFungibleToken {
         // The Clip Card node ID (UUID)
         pub let nodeId: String
         // Store different asset metadata, like type, IPFS URL etc
-        pub var metadata: {String: String}
+        access(self) var metadata: {String: String}
 
         // initializer
         //
@@ -41,6 +41,10 @@ pub contract RockPeaksClipCard: NonFungibleToken {
             self.id = initID
             self.nodeId = initNodeId
             self.metadata = initMetadata
+        }
+
+        pub fun getMetadata(): {String: String} { 
+            return self.metadata
         }
     }
 

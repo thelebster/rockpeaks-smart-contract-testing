@@ -10,6 +10,7 @@ import {
   transferRockPeaksClipCard,
   getRockPeaksClipCard,
   getRockPeaksClipCardCount,
+  getRockPeaksClipCardMetadata,
 } from "./src/clip-card";
 
 // We need to set timeout for a higher number, because some transactions might take up some time
@@ -96,5 +97,20 @@ describe("rp-clip-card", ()=>{
 
     // Transfer transaction shall pass
     await shallPass(transferRockPeaksClipCard(Barnaby, Bob, 0));
+  });
+
+  it("shall be able to set/get metadata", async () => {
+    await deployRockPeaksClipCard();
+    const Barnaby = await getAccountAddress("Barnaby");
+    await setupRockPeaksClipCardOnAccount(Barnaby);
+    const nodeIdToMint = '2c443592-cd3c-403a-81e5-ffa4608422c5';
+
+    // Mint instruction for Barnaby account shall be resolved
+    await shallPass(mintRockPeaksClipCard(nodeIdToMint, Barnaby));
+
+    await shallResolve(async () => {
+      const metadata = await getRockPeaksClipCardMetadata(Barnaby, 0);
+      expect(metadata).toStrictEqual({"type": "Edition", "uri": "ipfs://QmRZdc3mAMXpv6Akz9Ekp1y4vDSjazTx2dCQRkxVy1yUj6"});
+    });
   });
 })

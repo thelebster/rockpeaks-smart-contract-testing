@@ -99,3 +99,17 @@ export const getRockPeaksClipCardCount = async (account) => {
 
   return executeScript({ name, args });
 };
+
+/*
+ * Returns the RockPeaksClipCard NFT metadata.
+ * @param {string} account - account address
+ * @param {UInt64} itemID - NFT id
+ * @throws Will throw an error if execution will be halted
+ * @returns {String: String}
+ * */
+export const getRockPeaksClipCardMetadata = async (account, itemID) => {
+  const name = "clip-card/get_metadata";
+  const args = [account, itemID];
+
+  return executeScript({ name, args });
+};
