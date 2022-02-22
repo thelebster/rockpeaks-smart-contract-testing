@@ -92,3 +92,18 @@ Authorizers     [b3bac6876b64addd]
 ```
 
 Repeat the previous step to setup different capabilities to an account.
+
+### Set up an account to receive FUSD.
+
+* [https://docs.onflow.org/fusd/#how-do-i-get-an-fusd-enabled-wallet](https://docs.onflow.org/fusd/#how-do-i-get-an-fusd-enabled-wallet)
+* [https://docs.onflow.org/fusd/transactions/#setup-fusd-vault--receiver](https://docs.onflow.org/fusd/transactions/#setup-fusd-vault--receiver)
+
+```
+FLOW_TESTNET_ACCOUNT_ADDRESS=0xb3bac6876b64addd \
+FLOW_TESTNET_PRIVATE_KEY=e661b6cef4791978844db4c1ae603fb3f81c6d865... \
+flow transactions send ./cadence/transactions/FUSD/setup_fusd_vault.cdc \
+	--network testnet \
+	--signer testnet-account
+```
+
+If you are on a testnet, go to https://testnet-faucet-v2.onflow.org/fund-account and fund account with some FUSD tokens. 
