@@ -33,6 +33,9 @@ npm test -- nft-storefront.test.js
 
 ## Changelog
 
+**June 10, 2022**
+* Update [flow-js-testing](https://github.com/onflow/flow-js-testing) version to 0.2.3-alpha.5 due to [issue](https://github.com/onflow/flow-js-testing/issues/94) to make it compatible with the latest flow emulator version. 
+
 **Nov 24, 2021**
 * Add basic contract [./RightsHolderSplits.cdc](../cadence/contracts/RightsHolderSplits.cdc) to process payment splits.
 
