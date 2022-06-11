@@ -43,7 +43,7 @@ pub contract RockPeaksClipCard: NonFungibleToken {
             self.metadata = initMetadata
         }
 
-        pub fun getMetadata(): {String: String} { 
+        pub fun getMetadata(): {String: String} {
             return self.metadata
         }
     }
@@ -114,7 +114,7 @@ pub contract RockPeaksClipCard: NonFungibleToken {
         // so that the caller can read its metadata and call its methods
         //
         pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT {
-            return &self.ownedNFTs[id] as &NonFungibleToken.NFT
+            return (&self.ownedNFTs[id] as &NonFungibleToken.NFT?)!
         }
 
         // borrowRockPeaksClipCard
@@ -124,11 +124,12 @@ pub contract RockPeaksClipCard: NonFungibleToken {
         //
         pub fun borrowRockPeaksClipCard(id: UInt64): &RockPeaksClipCard.NFT? {
             if self.ownedNFTs[id] != nil {
-                let ref = &self.ownedNFTs[id] as auth &NonFungibleToken.NFT
+                // Create an authorized reference to allow downcasting
+                let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
                 return ref as! &RockPeaksClipCard.NFT
-            } else {
-                return nil
             }
+
+            return nil
         }
 
         // destructor
@@ -168,7 +169,7 @@ pub contract RockPeaksClipCard: NonFungibleToken {
             // deposit it in the recipient's account using their reference
 			recipient.deposit(token: <-token)
 
-            RockPeaksClipCard.totalSupply = nftID + (1 as UInt64)
+            RockPeaksClipCard.totalSupply = RockPeaksClipCard.totalSupply + UInt64(1)
 		}
 	}
 

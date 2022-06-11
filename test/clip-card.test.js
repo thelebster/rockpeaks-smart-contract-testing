@@ -16,7 +16,7 @@ import {
 // We need to set timeout for a higher number, because some transactions might take up some time
 jest.setTimeout(500000);
 
-describe("rp-clip-card", ()=>{
+describe("rp-clip-card", () => {
   beforeEach(async () => {
     const basePath = path.resolve(__dirname, "../cadence");
 		// You can specify different port to parallelize execution of describe blocks
@@ -43,10 +43,8 @@ describe("rp-clip-card", ()=>{
     const RockPeaksAdmin = await getRockPeaksAdminAddress();
     await shallPass(setupRockPeaksClipCardOnAccount(RockPeaksAdmin));
 
-    await shallResolve(async () => {
-      const supply = await getRockPeaksClipCardSupply();
-      expect(supply).toBe(0);
-    });
+    const [supply] = await shallResolve(getRockPeaksClipCardSupply());
+    expect(supply).toBe(0);
   });
 
   it("shall be able to mint a RockPeaksClipCard", async () => {
@@ -67,10 +65,8 @@ describe("rp-clip-card", ()=>{
     await setupRockPeaksClipCardOnAccount(Barnaby);
 
     // shall be able te read Barnaby collection and ensure it's empty
-    await shallResolve(async () => {
-      const itemCount = await getRockPeaksClipCardCount(Barnaby);
-      expect(itemCount).toBe(0);
-    });
+    const [itemCount] = await shallResolve(getRockPeaksClipCardCount(Barnaby));
+    expect(itemCount).toBe(0);
   });
 
   it("shall not be able to withdraw an NFT that doesn't exist in a collection", async () => {
@@ -108,9 +104,8 @@ describe("rp-clip-card", ()=>{
     // Mint instruction for Barnaby account shall be resolved
     await shallPass(mintRockPeaksClipCard(nodeIdToMint, Barnaby));
 
-    await shallResolve(async () => {
-      const metadata = await getRockPeaksClipCardMetadata(Barnaby, 0);
-      expect(metadata).toStrictEqual({"type": "Edition", "uri": "ipfs://QmRZdc3mAMXpv6Akz9Ekp1y4vDSjazTx2dCQRkxVy1yUj6"});
-    });
+
+    const [metadata] = await shallResolve(getRockPeaksClipCardMetadata(Barnaby, 0));
+    expect(metadata).toStrictEqual({"type": "Edition", "uri": "ipfs://QmRZdc3mAMXpv6Akz9Ekp1y4vDSjazTx2dCQRkxVy1yUj6"});
   });
 })
