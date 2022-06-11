@@ -14,7 +14,7 @@ import {
 // We need to set timeout for a higher number, because some transactions might take up some time
 jest.setTimeout(500000);
 
-describe("peakon", ()=>{
+describe("peakon", () => {
   beforeEach(async () => {
     const basePath = path.resolve(__dirname, "../cadence");
 		// You can specify different port to parallelize execution of describe blocks
@@ -35,10 +35,8 @@ describe("peakon", ()=>{
     // Deploy contract
     await shallPass(deployPeakon());
 
-    await shallResolve(async () => {
-      const supply = await getPeakonSupply();
-      expect(supply).toBe(toUFix64(0));
-    });
+    const [supply] = await shallResolve(getPeakonSupply());
+    expect(supply).toBe(toUFix64(0));
   });
 
   it("shall be able to create empty Vault that doesn't affect supply", async () => {
@@ -47,12 +45,10 @@ describe("peakon", ()=>{
     const Barnaby = await getAccountAddress("Barnaby");
     await shallPass(setupPeakonOnAccount(Barnaby));
 
-    await shallResolve(async () => {
-      const supply = await getPeakonSupply();
-      const barnBalance = await getPeakonBalance(Barnaby);
-      expect(supply).toBe(toUFix64(0));
-      expect(barnBalance).toBe(toUFix64(0));
-    });
+    const [supply] = await shallResolve(getPeakonSupply());
+    expect(supply).toBe(toUFix64(0));
+    const [barnBalance] = await shallResolve(getPeakonBalance(Barnaby));
+    expect(barnBalance).toBe(toUFix64(0));
   });
 
   it("shall not be able to mint zero tokens", async () => {
@@ -75,16 +71,12 @@ describe("peakon", ()=>{
     // Mint Peakon tokens for Barnaby
     await shallPass(mintPeakon(Barnaby, amount));
 
-    // Check Peakon total supply and Barnaby balance
-    await shallResolve(async () => {
-      // Check Barnaby balance to equal amount
-      const balance = await getPeakonBalance(Barnaby);
-      expect(balance).toBe(amount);
-
-      // Check Peakon supply to equal amount
-      const supply = await getPeakonSupply();
-      expect(supply).toBe(amount);
-    });
+    // Check Barnaby balance to equal amount
+    const [balance] = await shallResolve(getPeakonBalance(Barnaby));
+    expect(balance).toBe(amount);
+    // Check Peakon supply to equal amount
+    const [supply] = await shallResolve(getPeakonSupply());
+    expect(supply).toBe(amount);
   });
 
   it("shall not be able to withdraw more than the balance of the Vault", async () => {
@@ -106,13 +98,10 @@ describe("peakon", ()=>{
     await shallRevert(transferPeakon(RockPeaksAdmin, Barnaby, overflowAmount));
 
     // Balances shall be intact
-    await shallResolve(async () => {
-      const barnBalance = await getPeakonBalance(Barnaby);
-      expect(barnBalance).toBe(toUFix64(0));
-
-      const RockPeaksAdminBalance = await getPeakonBalance(RockPeaksAdmin);
-      expect(RockPeaksAdminBalance).toBe(amount);
-    });
+    const [barnBalance] = await shallResolve(getPeakonBalance(Barnaby));
+    expect(barnBalance).toBe(toUFix64(0));
+    const [RockPeaksAdminBalance] = await shallResolve(getPeakonBalance(RockPeaksAdmin));
+    expect(RockPeaksAdminBalance).toBe(amount);
   });
 
   it("shall be able to withdraw and deposit tokens from a Vault", async () => {
@@ -125,16 +114,14 @@ describe("peakon", ()=>{
 
     await shallPass(transferPeakon(RockPeaksAdmin, Barnaby, toUFix64(300)));
 
-    await shallResolve(async () => {
-      // Balances shall be updated
-      const RockPeaksAdminBalance = await getPeakonBalance(RockPeaksAdmin);
-      expect(RockPeaksAdminBalance).toBe(toUFix64(700));
+    // Balances shall be updated
+    const [RockPeaksAdminBalance] = await shallResolve(getPeakonBalance(RockPeaksAdmin));
+    expect(RockPeaksAdminBalance).toBe(toUFix64(700));
 
-      const barnBalance = await getPeakonBalance(Barnaby);
-      expect(barnBalance).toBe(toUFix64(300));
+    const [barnBalance] = await shallResolve(getPeakonBalance(Barnaby));
+    expect(barnBalance).toBe(toUFix64(300));
 
-      const supply = await getPeakonSupply();
-      expect(supply).toBe(toUFix64(1000));
-    });
+    const [supply] = await shallResolve(getPeakonSupply());
+    expect(supply).toBe(toUFix64(1000));
   });
 })

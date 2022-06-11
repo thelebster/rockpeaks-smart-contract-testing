@@ -2,7 +2,7 @@ import path from "path";
 import { emulator, init, getAccountAddress, shallPass, set, getConfigValue } from "flow-js-testing";
 import * as fcl from "@onflow/fcl";
 
-import {getRockPeaksAdminAddress, toUFix64} from "./src/common";
+import { getRockPeaksAdminAddress, toUFix64 } from "./src/common";
 import { mintPeakon } from "./src/peakon";
 import {
   getRockPeaksClipCardCount,
