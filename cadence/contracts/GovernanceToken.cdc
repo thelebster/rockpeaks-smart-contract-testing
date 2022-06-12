@@ -99,7 +99,7 @@ pub contract GovernanceToken: NonFungibleToken {
         // so that the caller can read its metadata and call its methods
         //
         pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT {
-            return &self.ownedNFTs[id] as &NonFungibleToken.NFT
+            return (&self.ownedNFTs[id] as &NonFungibleToken.NFT?)!
         }
 
         // borrowGovernanceToken
@@ -109,11 +109,12 @@ pub contract GovernanceToken: NonFungibleToken {
         //
         pub fun borrowGovernanceToken(id: UInt64): &GovernanceToken.NFT? {
             if self.ownedNFTs[id] != nil {
-                let ref = &self.ownedNFTs[id] as auth &NonFungibleToken.NFT
+                // Create an authorized reference to allow downcasting
+                let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
                 return ref as! &GovernanceToken.NFT
-            } else {
-                return nil
             }
+
+            return nil
         }
 
         // destructor
@@ -151,7 +152,7 @@ pub contract GovernanceToken: NonFungibleToken {
 			// deposit it in the recipient's account using their reference
 			recipient.deposit(token: <-create GovernanceToken.NFT(initID: GovernanceToken.totalSupply, initUserID: userID))
 
-            GovernanceToken.totalSupply = GovernanceToken.totalSupply + (1 as UInt64)
+            GovernanceToken.totalSupply = GovernanceToken.totalSupply + UInt64(1)
 		}
 	}
 
