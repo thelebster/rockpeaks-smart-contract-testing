@@ -93,28 +93,28 @@ describe("nft-storefront", () => {
 
     // Bob shall be able to buy from Barnaby
     const salePrice = 15.0;
-    const sellItemTransactionResult = await shallPass(sellItem(Barnaby, itemId, toUFix64(salePrice)));
+    const [sellItemTransactionResult] = await shallPass(sellItem(Barnaby, itemId, toUFix64(salePrice)));
 
     const saleOfferAvailableEvent = sellItemTransactionResult.events[0];
     const saleOfferResourceID = saleOfferAvailableEvent.data.listingResourceID;
 
     await shallPass(buyItem(Bob, saleOfferResourceID, Barnaby));
 
-    const itemCount = await getRockPeaksClipCardCount(Bob);
+    const [itemCount] = await getRockPeaksClipCardCount(Bob);
     expect(itemCount).toBe(1);
 
-    const offerCount = await getSaleOfferCount(Barnaby);
+    const [offerCount] = await getSaleOfferCount(Barnaby);
     expect(offerCount).toBe(0);
 
     const commission = salePrice * 0.1; // 10%
-    const barnabyBalance = await getPeakonBalance(Barnaby);
+    const [barnabyBalance] = await getPeakonBalance(Barnaby);
     expect(barnabyBalance).toBe(toUFix64(salePrice - commission));
 
-    const bobBalance = await getPeakonBalance(Bob);
+    const [bobBalance] = await getPeakonBalance(Bob);
     expect(bobBalance).toBe(toUFix64(100 - salePrice));
 
     // Escrow balance should get a 10% commission from the original price
-    const escrowBalance = await getPeakonBalance(Escrow);
+    const [escrowBalance] = await getPeakonBalance(Escrow);
     expect(escrowBalance).toBe(toUFix64(commission));
   });
 
@@ -139,7 +139,7 @@ describe("nft-storefront", () => {
     fcl.config().put("0xEscrowAccount", Escrow);
 
     // Listing item for sale shall pass
-    const sellItemTransactionResult = await shallPass(sellItem(Barnaby, itemId, toUFix64(1.11)));
+    const [sellItemTransactionResult] = await shallPass(sellItem(Barnaby, itemId, toUFix64(1.11)));
 
     const saleOfferAvailableEvent = sellItemTransactionResult.events[0];
     const saleOfferResourceID = saleOfferAvailableEvent.data.listingResourceID;
@@ -147,7 +147,7 @@ describe("nft-storefront", () => {
     // Barnaby shall be able to remove item from sale
     await shallPass(removeItem(Barnaby, saleOfferResourceID));
 
-    const offerCount = await getSaleOfferCount(Barnaby);
+    const [offerCount] = await getSaleOfferCount(Barnaby);
     expect(offerCount).toBe(0);
   });
 });
