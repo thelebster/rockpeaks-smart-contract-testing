@@ -60,16 +60,16 @@ describe("rights-holder-splits", () => {
     const nftID = 0;
     const transactionResult = await shallPass(splitPayment(Barnaby, toUFix64(amount), recipients, splits, nftID));
 
-    const RPBalance = await getPeakonBalance(RPAccount);
+    const [RPBalance] = await getPeakonBalance(RPAccount);
     expect(RPBalance).toBe(toUFix64(5));
 
-    const YTBalance = await getPeakonBalance(YTAccount);
+    const [YTBalance] = await getPeakonBalance(YTAccount);
     expect(YTBalance).toBe(toUFix64(3));
 
-    const SellerBalance = await getPeakonBalance(SellerAccount);
+    const [SellerBalance] = await getPeakonBalance(SellerAccount);
     expect(SellerBalance).toBe(toUFix64(7));
 
-    const barnBalance = await getPeakonBalance(Barnaby);
+    const [barnBalance] = await getPeakonBalance(Barnaby);
     expect(barnBalance).toBe(toUFix64(85));
   });
 
@@ -96,15 +96,13 @@ describe("rights-holder-splits", () => {
     await shallRevert(splitPayment(Barnaby, toUFix64(25.0), recipients, splits, nftID));
 
     // Balances shall be intact
-    await shallResolve(async () => {
-      const barnBalance = await getPeakonBalance(Barnaby);
-      expect(barnBalance).toBe(toUFix64(10));
+    const [barnBalance] = await shallResolve(getPeakonBalance(Barnaby));
+    expect(barnBalance).toBe(toUFix64(10));
 
-      const RPAccountBalance = await getPeakonBalance(RPAccount);
-      expect(RPAccountBalance).toBe(toUFix64(0));
+    const [RPAccountBalance] = await shallResolve(getPeakonBalance(RPAccount));
+    expect(RPAccountBalance).toBe(toUFix64(0));
 
-      const YTAccountBalance = await getPeakonBalance(YTAccount);
-      expect(YTAccountBalance).toBe(toUFix64(0));
-    });
+    const [YTAccountBalance] = await shallResolve(getPeakonBalance(YTAccount));
+    expect(YTAccountBalance).toBe(toUFix64(0));
   });
 });
