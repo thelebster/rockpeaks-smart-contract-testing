@@ -64,13 +64,13 @@
 			]
 		},
 		"emulator": {
-		  	"emulator-account": [
+			"emulator-account": [
 				"Peakon",
 				"RockPeaksClipCard",
 				"GovernanceToken",
-				"RightsHolderSplits",  
+				"RightsHolderSplits",
 				"NFTStorefront"
-		  	]
+			]
 		}
 	}
 }

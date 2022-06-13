@@ -42,10 +42,8 @@ describe("governance-token", ()=>{
     const RockPeaksAdmin = await getRockPeaksAdminAddress();
     await shallPass(setupGovernanceTokenOnAccount(RockPeaksAdmin));
 
-    await shallResolve(async () => {
-      const supply = await getGovernanceTokenSupply();
-      expect(supply).toBe(0);
-    });
+    const [supply] = await shallResolve(getGovernanceTokenSupply());
+    expect(supply).toBe(0);
   });
 
   it("shall be able to mint a GovernanceToken", async () => {
@@ -66,10 +64,8 @@ describe("governance-token", ()=>{
     await setupGovernanceTokenOnAccount(Barnaby);
 
     // shall be able te read Barnaby collection and ensure it's empty
-    await shallResolve(async () => {
-      const itemCount = await getGovernanceTokenCount(Barnaby);
-      expect(itemCount).toBe(0);
-    });
+    const [itemCount] = await shallResolve(getGovernanceTokenCount(Barnaby));
+    expect(itemCount).toBe(0);
   });
 
   it("shall not be able to withdraw an NFT that doesn't exist in a collection", async () => {
