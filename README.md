@@ -107,3 +107,15 @@ flow transactions send ./cadence/transactions/FUSD/setup_fusd_vault.cdc \
 ```
 
 If you are on a testnet, go to https://testnet-faucet-v2.onflow.org/fund-account and fund account with some FUSD tokens. 
+
+### Secure Cadence Breaking Changes Analyzer
+
+* [Secure Cadence Breaking Changes Analyzer](https://forum.onflow.org/t/secure-cadence-breaking-changes-analyzer/3059)
+
+```shell
+sh -ci "$(curl -fsSL https://storage.googleapis.com/flow-cli/install-cadence-analyzer.sh)"
+```
+
+```shell
+cadence-analyzer -network testnet -address 0xaa7316d905cc179a
+```
