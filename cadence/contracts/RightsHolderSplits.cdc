@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: Unlicense
 import FungibleToken from "./FungibleToken.cdc"
-import Peakon from "./Peakon.cdc"
 
 /*
     This is a "Rights Holder Splits" contract, that will be triggered upon completion of
