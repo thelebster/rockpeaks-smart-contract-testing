@@ -18,7 +18,12 @@ This is a **complete NFT marketplace** built with [Cadence](https://docs.onflow.
 
 ## Flow Testnet
 
-[Contracts](./cadence/contracts) has been deployed to the Flow testnet under the admin account [0x8441c7a9269d7eb8](https://flow-view-source.com/testnet/account/0x8441c7a9269d7eb8).
+[Contracts](./cadence/contracts) has been deployed to the Flow testnet.
+
+|Name|Testnet|Mainnet|
+|----|-------|-------|
+|[Peakon](./cadence/contracts/Peakon.cdc)|[0x8441c7a9269d7eb8](https://testnet.flowscan.org/contract/A.8441c7a9269d7eb8.Peakon)| - |
+|[RockPeaksClipCard](./cadence/contracts/RockPeaksClipCard.cdc)|[0xaa7316d905cc179a](https://testnet.flowscan.org/contract/A.aa7316d905cc179a.RockPeaksClipCard)| - |
 
 ## Testing
 

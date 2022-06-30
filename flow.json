@@ -52,15 +52,21 @@
 		"testnet-account": {
 			"address": "${FLOW_TESTNET_ACCOUNT_ADDRESS}",
 			"key": "${FLOW_TESTNET_PRIVATE_KEY}"
+		},
+		"testnet-nft-account": {
+			"address": "${FLOW_TESTNET_NFT_ACCOUNT_ADDRESS}",
+			"key": "${FLOW_TESTNET_NFT_ACCOUNT_PRIVATE_KEY}"
 		}
 	},
 	"deployments": {
 		"testnet": {
 			"testnet-account": [
 				"Peakon",
-				"RockPeaksClipCard",
 				"GovernanceToken",
 				"RightsHolderSplits"
+			],
+			"testnet-nft-account": [
+				"RockPeaksClipCard"
 			]
 		},
 		"emulator": {
