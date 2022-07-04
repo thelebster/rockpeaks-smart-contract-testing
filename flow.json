@@ -37,6 +37,14 @@
 				"testnet": "0x94b06cfca1d8a476",
 				"mainnet": "0x4eb8a10cb9f87357"
 			}
+		},
+		"MusicPeaksClipCard": "./cadence/contracts/MusicPeaksClipCard.cdc",
+		"MetadataViews": {
+			"source": "./cadence/contracts/MetadataViews.cdc",
+			"aliases": {
+				"testnet": "0x631e88ae7f1d7c20",
+				"mainnet": "0x1d7e57aa55817448"
+			}
 		}
 	},
 	"networks": {
@@ -56,6 +64,10 @@
 		"testnet-nft-account": {
 			"address": "${FLOW_TESTNET_NFT_ACCOUNT_ADDRESS}",
 			"key": "${FLOW_TESTNET_NFT_ACCOUNT_PRIVATE_KEY}"
+		},
+		"testnet-mp-account" : {
+			"address": "9d5f8b7ef33b0693",
+			"keys": "9e620c71cf3f46c3c7fabcdfb685319e60a131817e23cd743e396a651e55d7d7"
 		}
 	},
 	"deployments": {
@@ -67,6 +79,9 @@
 			],
 			"testnet-nft-account": [
 				"RockPeaksClipCard"
+			],
+			"testnet-mp-account": [
+				"MusicPeaksClipCard"
 			]
 		},
 		"emulator": {
@@ -75,7 +90,9 @@
 				"RockPeaksClipCard",
 				"GovernanceToken",
 				"RightsHolderSplits",
-				"NFTStorefront"
+				"NFTStorefront",
+				"MetadataViews",
+				"MusicPeaksClipCard"
 			]
 		}
 	}

@@ -10,6 +10,7 @@ This is a **complete NFT marketplace** built with [Cadence](https://docs.onflow.
 |[NonFungibleToken](./cadence/contracts/NonFungibleToken.cdc)|[0x631e88ae7f1d7c20](https://testnet.flowscan.org/contract/A.631e88ae7f1d7c20.NonFungibleToken)|[0x1d7e57aa55817448](https://flowscan.org/contract/A.1d7e57aa55817448.NonFungibleToken)|
 |[NFTStorefront](./cadence/contracts/NFTStorefront.cdc)|[0x94b06cfca1d8a476](https://testnet.flowscan.org/contract/A.94b06cfca1d8a476.NFTStorefront)|[0x4eb8a10cb9f87357](https://flowscan.org/contract/A.4eb8a10cb9f87357.NFTStorefront)|
 |[FUSD](./cadence/contracts/FUSD.cdc)|[0xe223d8a629e49c68](https://testnet.flowscan.org/contract/A.e223d8a629e49c68.FUSD)|[0x3c5959b568896393](https://flowscan.org/contract/A.3c5959b568896393.FUSD)|
+|[MetadataViews](./cadence/contracts/MetadataViews.cdc)|[0x631e88ae7f1d7c20](https://testnet.flowscan.org/contract/A.631e88ae7f1d7c20.MetadataViews)|[0x1d7e57aa55817448](https://flowscan.org/contract/A.1d7e57aa55817448.MetadataViews)|
 
 * https://docs.onflow.org/core-contracts/fungible-token/
 * https://docs.onflow.org/core-contracts/non-fungible-token/
