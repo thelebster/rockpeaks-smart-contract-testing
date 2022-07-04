@@ -27,6 +27,24 @@ npm test -- rights-holder-splits.test.js
 npm test -- nft-storefront.test.js
 ```
 
+Alternatively you could run tests in a Docker container.
+
+```shell
+docker build -t rockpeaks-onflow-tests .
+
+# Run all tests.
+docker run -it --rm --name rockpeaks-onflow-tests \
+  --volume "$(pwd)"/cadence:/cadence \
+  --volume "$(pwd)"/test:/test \
+  rockpeaks-onflow-tests npm test
+  
+# Run a specific test suite.  
+docker run -it --rm --name rockpeaks-onflow-tests \
+  --volume "$(pwd)"/cadence:/cadence \
+  --volume "$(pwd)"/test:/test \
+  rockpeaks-onflow-tests npm test -- nft-storefront.test.js
+```
+
 ## References
 
 * [Testnet Testing Guidelines](https://docs.onflow.org/dapp-development/testnet-testing/)
