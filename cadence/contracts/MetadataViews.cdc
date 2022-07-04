@@ -11,7 +11,7 @@ a different kind of metadata, such as a creator biography
 or a JPEG image file.
 */
 
-import FungibleToken from "./utility/FungibleToken.cdc"
+import FungibleToken from "./FungibleToken.cdc"
 import NonFungibleToken from "./NonFungibleToken.cdc"
 
 pub contract MetadataViews {
@@ -38,14 +38,14 @@ pub contract MetadataViews {
     ///
     pub struct Display {
 
-        /// The name of the object. 
+        /// The name of the object.
         ///
         /// This field will be displayed in lists and therefore should
         /// be short an concise.
         ///
         pub let name: String
 
-        /// A written description of the object. 
+        /// A written description of the object.
         ///
         /// This field will be displayed in a detailed view of the object,
         /// so can be more verbose (e.g. a paragraph instead of a single line).
@@ -70,6 +70,16 @@ pub contract MetadataViews {
         }
     }
 
+    /// A helper to get Display in a typesafe way
+    pub fun getDisplay(_ viewResolver: &{Resolver}) : Display? {
+        if let view = viewResolver.resolveView(Type<Display>()) {
+            if let v = view as? Display {
+                return v
+            }
+        }
+        return nil
+    }
+
     /// File is a generic interface that represents a file stored on or off chain.
     ///
     /// Files can be used to references images, videos and other media.
@@ -78,7 +88,7 @@ pub contract MetadataViews {
         pub fun uri(): String
     }
 
-    /// HTTPFile is a file that is accessible at an HTTP (or HTTPS) URL. 
+    /// HTTPFile is a file that is accessible at an HTTP (or HTTPS) URL.
     ///
     pub struct HTTPFile: File {
         pub let url: String
@@ -134,12 +144,12 @@ pub contract MetadataViews {
     }
 
     /// Editions is an optional view for collections that issues multiple objects
-    /// with the same or similar metadata, for example an X of 100 set. This information is 
+    /// with the same or similar metadata, for example an X of 100 set. This information is
     /// useful for wallets and marketplaes.
     ///
     /// An NFT might be part of multiple editions, which is why the edition information
     /// is returned as an arbitrary sized array
-    /// 
+    ///
     pub struct Editions {
 
         /// An arbitrary-sized list for any number of editions
@@ -149,6 +159,16 @@ pub contract MetadataViews {
         init(_ infoList: [Edition]) {
             self.infoList = infoList
         }
+    }
+
+    /// A helper to get Editions in a typesafe way
+    pub fun getEditions(_ viewResolver: &{Resolver}) : Editions? {
+        if let view = viewResolver.resolveView(Type<Editions>()) {
+            if let v = view as? Editions {
+                return v
+            }
+        }
+        return nil
     }
 
     /// Edition information for a single edition
@@ -161,16 +181,16 @@ pub contract MetadataViews {
 
         /// The edition number of the object.
         ///
-        /// For an "24 of 100 (#24/100)" item, the number is 24. 
+        /// For an "24 of 100 (#24/100)" item, the number is 24.
         ///
         pub let number: UInt64
 
         /// The max edition number of this type of objects.
-        /// 
+        ///
         /// This field should only be provided for limited-editioned objects.
         /// For an "24 of 100 (#24/100)" item, max is 100.
         /// For an item with unlimited edition, max should be set to nil.
-        /// 
+        ///
         pub let max: UInt64?
 
         init(name: String?, number: UInt64, max: UInt64?) {
@@ -182,6 +202,7 @@ pub contract MetadataViews {
             self.max = max
         }
     }
+
 
     /// A view representing a project-defined serial number for a specific NFT
     /// Projects have different definitions for what a serial number should be
@@ -196,12 +217,22 @@ pub contract MetadataViews {
         }
     }
 
+    /// A helper to get Serial in a typesafe way
+    pub fun getSerial(_ viewResolver: &{Resolver}) : Serial? {
+        if let view = viewResolver.resolveView(Type<Serial>()) {
+            if let v = view as? Serial {
+                return v
+            }
+        }
+        return nil
+    }
+
     /*
     *  Royalty Views
     *  Defines the composable royalty standard that gives marketplaces a unified interface
     *  to support NFT royalties.
     *
-    *  Marketplaces can query this `Royalties` struct from NFTs 
+    *  Marketplaces can query this `Royalties` struct from NFTs
     *  and are expected to pay royalties based on these specifications.
     *
     */
@@ -227,6 +258,16 @@ pub contract MetadataViews {
         }
     }
 
+    /// A helper to get Royalties in a typesafe way
+    pub fun getRoyalties(_ viewResolver: &{Resolver}) : Royalties? {
+        if let view = viewResolver.resolveView(Type<Royalties>()) {
+            if let v = view as? Royalties {
+                return v
+            }
+        }
+        return nil
+    }
+
     /// Struct to store details of a single royalty cut for a given NFT
     pub struct Royalty {
 
@@ -238,7 +279,7 @@ pub contract MetadataViews {
         pub let receiver: Capability<&AnyResource{FungibleToken.Receiver}>
 
         /// Multiplier used to calculate the amount of sale value transferred to royalty receiver.
-        /// Note - It should be between 0.0 and 1.0 
+        /// Note - It should be between 0.0 and 1.0
         /// Ex - If the sale value is x and multiplier is 0.56 then the royalty value would be 0.56 * x.
         ///
         /// Generally percentage get represented in terms of basis points
@@ -280,9 +321,19 @@ pub contract MetadataViews {
         }
     }
 
+    /// A helper to get Medias in a typesafe way
+    pub fun getMedias(_ viewResolver: &{Resolver}) : Medias? {
+        if let view = viewResolver.resolveView(Type<Medias>()) {
+            if let v = view as? Medias {
+                return v
+            }
+        }
+        return nil
+    }
+
     /// A view to represent Media, a file with an correspoiding mediaType.
     pub struct Media {
-        
+
         /// File for the media
         pub let file: AnyStruct{File}
 
@@ -297,7 +348,7 @@ pub contract MetadataViews {
 
     /// A license according to https://spdx.org/licenses/
     ///
-    /// This view can be used if the content of an NFT is licensed. 
+    /// This view can be used if the content of an NFT is licensed.
     pub struct License {
         pub let spdxIdentifier: String
 
@@ -305,6 +356,17 @@ pub contract MetadataViews {
             self.spdxIdentifier = identifier
         }
     }
+
+    /// A helper to get License in a typesafe way
+    pub fun getLicense(_ viewResolver: &{Resolver}) : License? {
+        if let view = viewResolver.resolveView(Type<License>()) {
+            if let v = view as? License {
+                return v
+            }
+        }
+        return nil
+    }
+
 
     /// A view to expose a URL to this item on an external site.
     ///
@@ -315,6 +377,16 @@ pub contract MetadataViews {
         init(_ url: String) {
             self.url=url
         }
+    }
+
+    /// A helper to get ExternalURL in a typesafe way
+    pub fun getExternalURL(_ viewResolver: &{Resolver}) : ExternalURL? {
+        if let view = viewResolver.resolveView(Type<ExternalURL>()) {
+            if let v = view as? ExternalURL {
+                return v
+            }
+        }
+        return nil
     }
 
     // A view to expose the information needed store and retrieve an NFT
@@ -375,6 +447,16 @@ pub contract MetadataViews {
         }
     }
 
+    /// A helper to get NFTCollectionData in a way that will return an typed Optional
+    pub fun getNFTCollectionData(_ viewResolver: &{Resolver}) : NFTCollectionData? {
+        if let view = viewResolver.resolveView(Type<NFTCollectionData>()) {
+            if let v = view as? NFTCollectionData {
+                return v
+            }
+        }
+        return nil
+    }
+
     // A view to expose the information needed to showcase this NFT's collection
     //
     // This can be used by applications to give an overview and graphics of the NFT collection
@@ -414,6 +496,16 @@ pub contract MetadataViews {
             self.bannerImage = bannerImage
             self.socials = socials
         }
+    }
+
+    /// A helper to get NFTCollectionDisplay in a way that will return an typed Optional
+    pub fun getNFTCollectionDisplay(_ viewResolver: &{Resolver}) : NFTCollectionDisplay? {
+        if let view = viewResolver.resolveView(Type<NFTCollectionDisplay>()) {
+            if let v = view as? NFTCollectionDisplay {
+                return v
+            }
+        }
+        return nil
     }
 
     // A view to represent a single field of metadata on an NFT.
@@ -457,6 +549,16 @@ pub contract MetadataViews {
         pub fun addTrait(_ t: Trait) {
             self.traits.append(t)
         }
+    }
+
+    /// A helper to get Traits view in a typesafe way
+    pub fun getTraits(_ viewResolver: &{Resolver}) : Traits? {
+        if let view = viewResolver.resolveView(Type<Traits>()) {
+            if let v = view as? Traits {
+                return v
+            }
+        }
+        return nil
     }
 
     // A helper function to easily convert a dictionary to traits. For NFT collections that do not need either of the
@@ -506,4 +608,15 @@ pub contract MetadataViews {
             self.description = description
         }
     }
+
+    /// A helper to get Rarity view in a typesafe way
+    pub fun getRarity(_ viewResolver: &{Resolver}) : Rarity? {
+        if let view = viewResolver.resolveView(Type<Rarity>()) {
+            if let v = view as? Rarity {
+                return v
+            }
+        }
+        return nil
+    }
+
 }
